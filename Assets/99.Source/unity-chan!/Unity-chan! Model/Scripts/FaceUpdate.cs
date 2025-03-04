@@ -33,7 +33,6 @@ namespace UnityChan
 
 		void Update ()
 		{
-
 			if (Input.GetMouseButton (0)) {
 				current = 1;
 			} else if (!isKeepFace) {
@@ -41,10 +40,10 @@ namespace UnityChan
 			}
 			anim.SetLayerWeight (1, current);
 		}
-	 
 
-		//アニメーションEvents側につける表情切り替え用イベントコール
-		public void OnCallChangeFace (string str)
+
+        //얼굴용 애니메이션이벤트
+        public void OnCallChangeFace (string str)
 		{   
 			int ichecked = 0;
 			foreach (var animation in animations) {
@@ -54,7 +53,7 @@ namespace UnityChan
 				} else if (ichecked <= animations.Length) {
 					ichecked++;
 				} else {
-					//str指定が間違っている時にはデフォルトで
+					//str 틀리면 디폴트
 					str = "default@unitychan";
 					ChangeFace (str);
 				}

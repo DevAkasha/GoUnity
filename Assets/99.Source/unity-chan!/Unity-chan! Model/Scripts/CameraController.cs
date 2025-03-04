@@ -1,18 +1,4 @@
-﻿//CameraController.cs for UnityChan
-//Original Script is here:
-//TAK-EMI / CameraController.cs
-//https://gist.github.com/TAK-EMI/d67a13b6f73bed32075d
-//https://twitter.com/TAK_EMI
-//
-//Revised by N.Kobayashi 2014/5/15 
-//Change : To prevent rotation flips on XY plane, use Quaternion in cameraRotate()
-//Change : Add the instrustion window
-//Change : Add the operation for Mac
-//
-
-
-
-
+﻿
 using UnityEngine;
 using System.Collections;
 

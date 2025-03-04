@@ -1,11 +1,4 @@
-﻿//
-//RandomWind.cs for unity-chan!
-//
-//Original Script is here:
-//ricopin / RandomWind.cs
-//Rocket Jump : http://rocketjump.skr.jp/unity3d/109/
-//https://twitter.com/ricopin416
-//
+﻿
 using UnityEngine;
 using System.Collections;
 

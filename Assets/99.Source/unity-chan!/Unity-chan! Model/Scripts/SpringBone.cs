@@ -1,13 +1,4 @@
-﻿//
-//SpringBone.cs for unity-chan!
-//
-//Original Script is here:
-//ricopin / SpringBone.cs
-//Rocket Jump : http://rocketjump.skr.jp/unity3d/109/
-//https://twitter.com/ricopin416
-//
-//Revised by N.Kobayashi 2014/06/20
-//
+﻿
 using UnityEngine;
 using System.Collections;
 
@@ -15,42 +6,40 @@ namespace UnityChan
 {
 	public class SpringBone : MonoBehaviour
 	{
-		//次のボーン
+		//연결된 자식 본
 		public Transform child;
 
-		//ボーンの向き
+		//본의 기본방향
 		public Vector3 boneAxis = new Vector3 (-1.0f, 0.0f, 0.0f);
 		public float radius = 0.05f;
 
-		//各SpringBoneに設定されているstiffnessForceとdragForceを使用するか？
+		//고유한 복원력과 감쇠 값을 사용할지 여부
 		public bool isUseEachBoneForceSettings = false; 
 
-		//バネが戻る力
+		//본이 원래 위치로 돌아가려는 복원력
 		public float stiffnessForce = 0.01f;
 
-		//力の減衰力
+		//감쇠력 (움직임이 얼마나 빠르게 멈추는지)
 		public float dragForce = 0.4f;
 		public Vector3 springForce = new Vector3 (0.0f, -0.0001f, 0.0f);
 		public SpringCollider[] colliders;
 		public bool debug = true;
-		//Kobayashi:Thredshold Starting to activate activeRatio
+		//움직임 역치값
 		public float threshold = 0.01f;
-		private float springLength;
-		private Quaternion localRotation;
+		private float springLength; 
+		private Quaternion localRotation; 
 		private Transform trs;
 		private Vector3 currTipPos;
 		private Vector3 prevTipPos;
-		//Kobayashi
+		//부모 본 
 		private Transform org;
-		//Kobayashi:Reference for "SpringManager" component with unitychan 
+		
 		private SpringManager managerRef;
 
 		private void Awake ()
 		{
 			trs = transform;
 			localRotation = transform.localRotation;
-			//Kobayashi:Reference for "SpringManager" component with unitychan
-			// GameObject.Find("unitychan_dynamic").GetComponent<SpringManager>();
 			managerRef = GetParentSpringManager (transform);
 		}
 
@@ -77,9 +66,8 @@ namespace UnityChan
 
 		public void UpdateSpring ()
 		{
-			//Kobayashi
 			org = trs;
-			//回転をリセット
+			//회전값 초기화
 			trs.localRotation = Quaternion.identity * localRotation;
 
 			float sqrDt = Time.deltaTime * Time.deltaTime;
@@ -92,17 +80,17 @@ namespace UnityChan
 
 			force += springForce / sqrDt;
 
-			//前フレームと値が同じにならないように
+			
 			Vector3 temp = currTipPos;
 
-			//verlet
-			currTipPos = (currTipPos - prevTipPos) + currTipPos + (force * sqrDt);
+            //Verlet Integration을 이용한 물리 계산
+            currTipPos = (currTipPos - prevTipPos) + currTipPos + (force * sqrDt);
 
-			//長さを元に戻す
-			currTipPos = ((currTipPos - trs.position).normalized * springLength) + trs.position;
+            // 본의 길이를 유지하면서 위치를 업데이트
+            currTipPos = ((currTipPos - trs.position).normalized * springLength) + trs.position;
 
-			//衝突判定
-			for (int i = 0; i < colliders.Length; i++) {
+            //충돌 감지 및 위치 조정
+            for (int i = 0; i < colliders.Length; i++) {
 				if (Vector3.Distance (currTipPos, colliders [i].transform.position) <= (radius + colliders [i].radius)) {
 					Vector3 normal = (currTipPos - colliders [i].transform.position).normalized;
 					currTipPos = colliders [i].transform.position + (normal * (radius + colliders [i].radius));
@@ -111,16 +99,15 @@ namespace UnityChan
 
 
 			}
-
+            //이전 위치 업데이트
 			prevTipPos = temp;
 
-			//回転を適用；
-			Vector3 aimVector = trs.TransformDirection (boneAxis);
+            // 본 회전 적용
+            Vector3 aimVector = trs.TransformDirection (boneAxis);
 			Quaternion aimRotation = Quaternion.FromToRotation (aimVector, currTipPos - trs.position);
-			//original
-			//trs.rotation = aimRotation * trs.rotation;
-			//Kobayahsi:Lerp with mixWeight
-			Quaternion secondaryRotation = aimRotation * trs.rotation;
+
+            //회전값을 보간하여 자연스러운 움직임 구현
+            Quaternion secondaryRotation = aimRotation * trs.rotation;
 			trs.rotation = Quaternion.Lerp (org.rotation, secondaryRotation, managerRef.dynamicRatio);
 		}
 
