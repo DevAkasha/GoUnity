@@ -18,16 +18,11 @@ namespace UnityChan
 		
 		public float useCurvesHeight = 0.5f;        // 커브 적용 높이 (지면 충돌 문제 방지)
 
-        //캐릭 이동 관련
-        
-        public float forwardSpeed = 7.0f; //전진속도
-                                         
-        public float backwardSpeed = 2.0f; //후진속도
-		
-		public float rotateSpeed = 2.0f; // 회전속도
-                                       
+        //캐릭 이동 관련 
+        public float forwardSpeed = 7.0f; //전진속도                                   
+        public float backwardSpeed = 3.0f; //후진속도		
+		public float rotateSpeed = 2.0f; // 회전속도                                       
         public float jumpPower = 3.0f;  // 점프 힘
-
                                         
         private CapsuleCollider col;
 		private Rigidbody rb;
@@ -102,7 +97,7 @@ namespace UnityChan
 			// 이동 적용
 			transform.localPosition += velocity * Time.fixedDeltaTime;
 
-			// 횢전 적용
+			// 회전 적용
 			transform.Rotate (0, h * rotateSpeed, 0);	
 	
 
