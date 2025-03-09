@@ -4,69 +4,96 @@
 public abstract class InteractableObject : MonoBehaviour
 {
     public Collider col;
-
-    public float destroyDelay = 0.1f;
     private bool isDestroyed = false;
+
+    public bool isRayInteractable = false;
     public bool primer = false;
+
+    public bool isOccupidable = false;
+    public float occupidDestroyDelay = 0.1f;
+
+    public bool isDisposable = false;
+    public float applyDestroyDelay = 0.1f;
+
+ 
 
     protected abstract void OccupidPlayer(PlayerSprit player);
     protected abstract void ApplyPlayer(PlayerSprit player);
-    protected abstract void OccupidNPC(NPCSprit NPC);
-    protected abstract void ApplyNPC(NPCSprit NPC);
-    protected abstract void ApplyEnviroment();
+    protected abstract void OccupidNPC(NPCSprit npc);
+    protected abstract void ApplyNPC(NPCSprit npc);
+    protected abstract void ApplyEnviroment(GameObject Target);
 
     protected virtual void Awake()
     {
         col = GetComponent<Collider>();
     }
 
-    public void OnInteraction(Collider collision) 
+    public void OnInteraction(Collider collider) 
     {
-        OnTriggerEnter(collision);
-        Debug.Log("상호작용 시작!!");
+        if (isRayInteractable) OnTriggerEnter(collider);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        OnTriggerEnter(collision.collider);
+    }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider collider)
     {
         if (isDestroyed) return;
         Debug.Log("상호작용 완료!!");
-        switch (collision.tag)
+        switch (collider.tag)
         {
             case "Player":
-                PlayerSprit player = collision.GetComponent<PlayerSprit>();
-                if (!primer) ApplyPlayer(player);
-                else 
+                PlayerSprit player = collider.GetComponent<PlayerSprit>();
+                if (primer)
                 {
-                    OccupidPlayer(player);
-                    DestroyAfterDelay();
+                    ApplyPlayer(player);
+                    if(isDisposable) DestroyAfterDelay(applyDestroyDelay);
+                }
+
+                else
+                {
+                    if (isOccupidable)
+                    {
+                        OccupidPlayer(player);
+                        DestroyAfterDelay(occupidDestroyDelay);
+                    }
                 }
                 break;
 
             case "NPC":
-                NPCSprit NPC = collision.GetComponent<NPCSprit>();
-                if (!primer) ApplyNPC(NPC);
+                NPCSprit NPC = collider.GetComponent<NPCSprit>();
+                if (primer)
+                {
+                    ApplyNPC(NPC);
+                    if (isDisposable) DestroyAfterDelay(applyDestroyDelay);
+                }
                 else
                 {
-                    OccupidNPC(NPC);
-                    DestroyAfterDelay();
+                    if (isOccupidable) 
+                    {
+                        OccupidNPC(NPC);
+                        DestroyAfterDelay(occupidDestroyDelay);
+                    }
+
                 }
                 break;
 
             case "Enviroment":
-                ApplyEnviroment();
-                DestroyAfterDelay();
+                    ApplyEnviroment(collider.gameObject);
+                    if(isDisposable) DestroyAfterDelay(applyDestroyDelay);
                 break;
             default: 
-                Debug.LogWarning($"{name}이 예상못한 객체({collision.name})에 충돌했어!");
+                Debug.LogWarning($"{name}이 예상못한 객체({collider.name})와 상호작용 했어");
                 break;
         }
     }
 
-    private void DestroyAfterDelay()
+    private void DestroyAfterDelay(float delay)
     {
         isDestroyed = true;
-        Destroy(gameObject, destroyDelay);
+        Destroy(gameObject, delay);
     }
 }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Door : InteractableObject
 {
-    protected override void ApplyEnviroment()
+    protected override void ApplyEnviroment(GameObject target)
     {
         throw new System.NotImplementedException();
     }

@@ -7,6 +7,7 @@ public class PlayerPersona : BasePersona<DUnityChan>
 {
     private StateIndicator hpIndicator;
     private StateIndicator stIndicator;
+    private Prompt prompt;
 
     [SerializeField] private GameObject lookAtPos;
     [SerializeField] private Camera mainCamera; 
@@ -31,10 +32,15 @@ public class PlayerPersona : BasePersona<DUnityChan>
                 break;
         }
     }
+    public void SetPrompt(Prompt prompt)
+    {
+        this.prompt = prompt;
+    }
+
     private void Update()
     {
-        hpIndicator.Indicate(entity.CurHP / entity.MaxHP);
-        stIndicator.Indicate(entity.CurST / entity.MaxST);
+        if (hpIndicator != null) hpIndicator.Indicate(entity.CurHP / entity.MaxHP);
+        if (stIndicator != null) stIndicator.Indicate(entity.CurST / entity.MaxST);
 
         if (Time.time - lastCheckTime > interactionRate)
         {
@@ -57,6 +63,8 @@ public class PlayerPersona : BasePersona<DUnityChan>
         {
             InteractableObject interactable = hit.collider.GetComponent<InteractableObject>();
             curInteractObject = interactable ? interactable : null;
+
+            //프롬프트에 텍스트 추가
         }
         else
             curInteractObject = null;

@@ -26,7 +26,7 @@ public class DUnityChan : BaseEntity
     public float stRecoveryRate = 100.0f;
     public float stThreshold;
     // 충돌 관련
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     protected override void Awake()
     {
