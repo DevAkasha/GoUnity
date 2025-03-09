@@ -6145,7 +6145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2064f40d65df3346ab59eddc690afa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 0}
   col: {fileID: 0}
+  isCollisonInteract: 0
   isRayInteractable: 1
   primer: 1
   isOccupidable: 0
@@ -7411,7 +7413,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2064f40d65df3346ab59eddc690afa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 0}
   col: {fileID: 0}
+  isCollisonInteract: 0
   isRayInteractable: 1
   primer: 1
   isOccupidable: 0
@@ -8385,7 +8389,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2064f40d65df3346ab59eddc690afa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 0}
   col: {fileID: 0}
+  isCollisonInteract: 0
   isRayInteractable: 1
   primer: 1
   isOccupidable: 0
@@ -15032,7 +15038,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2064f40d65df3346ab59eddc690afa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 0}
   col: {fileID: 0}
+  isCollisonInteract: 0
   isRayInteractable: 1
   primer: 1
   isOccupidable: 0
@@ -16845,7 +16853,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806072e5bf5600c47a911fa3b71769b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: c0e6edd09678d1e41a3b2249f3f7fa60, type: 2}
   col: {fileID: 0}
+  isCollisonInteract: 0
   isRayInteractable: 0
   primer: 1
   isOccupidable: 0

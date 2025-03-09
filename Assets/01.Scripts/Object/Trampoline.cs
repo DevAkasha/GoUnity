@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trampoline : InteractableObject
+public class Trampoline : InteractableStuff
 {
     private void OnCollisionEnter(Collision collision)
     {

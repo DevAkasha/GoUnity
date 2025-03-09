@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : InteractableObject
+public class Door : InteractableStuff
 {
     protected override void ApplyEnviroment(GameObject target)
     {
@@ -28,5 +28,4 @@ public class Door : InteractableObject
     {
         Debug.Log("플레이어와 상호작용했어");
     }
-
 }

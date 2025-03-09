@@ -17,7 +17,7 @@ public class PlayerPersona : BasePersona<DUnityChan>
     private float lastCheckTime;
     public LayerMask layerMask;
 
-    public InteractableObject curInteractObject;
+    public Interactable curInteractObject;
     public Collider col;
 
     public void SetStateIndicator(StateIndicator indicator)
@@ -30,17 +30,21 @@ public class PlayerPersona : BasePersona<DUnityChan>
             case StateType.ST:
                 stIndicator = indicator;
                 break;
+            default:
+                Debug.LogWarning($"{indicator.name}이 set되지 않았어!");
+                break;
         }
     }
     public void SetPrompt(Prompt prompt)
     {
         this.prompt = prompt;
+        if (this.prompt==null) Debug.LogWarning($"{prompt.name}이 set되지 않았어!");
     }
 
     private void Update()
     {
-        if (hpIndicator != null) hpIndicator.Indicate(entity.CurHP / entity.MaxHP);
-        if (stIndicator != null) stIndicator.Indicate(entity.CurST / entity.MaxST);
+        hpIndicator.Indicate(entity.CurHP / entity.MaxHP);
+        stIndicator.Indicate(entity.CurST / entity.MaxST);
 
         if (Time.time - lastCheckTime > interactionRate)
         {
@@ -59,21 +63,31 @@ public class PlayerPersona : BasePersona<DUnityChan>
         else 
             ray = new Ray(lookAtPos.transform.position, lookAtPos.transform.forward);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 5f, layerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, 5f))
         {
-            InteractableObject interactable = hit.collider.GetComponent<InteractableObject>();
-            curInteractObject = interactable ? interactable : null;
+            //제네릭은 GetComponent가 불가능 부모클래스로 실행
+            curInteractObject = hit.collider.GetComponent<Interactable>();
 
-            //프롬프트에 텍스트 추가
+            if (curInteractObject != null)
+            {
+                prompt.SetText(curInteractObject.GetPromptString());
+                prompt.gameObject.SetActive(true);
+            }
         }
         else
             curInteractObject = null;
+        
+        if (curInteractObject == null)
+        {
+            prompt.SetText("");
+            prompt.gameObject.SetActive(false);
+        }
 
         Debug.DrawRay(ray.origin, ray.direction * 5f, Color.green);
 
     }
 
-    public void TryInteractaction(InteractableObject target)
+    public void TryInteractaction(Interactable target)
     {
         if (target == null) return;
         target.OnInteraction(col);
