@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum InteractionType { Collistion, Trigger, Both}
+public enum InteractionType { Collision, Trigger, Both}
 public enum InteractalbeCategory { Item, Stuff }
 
 

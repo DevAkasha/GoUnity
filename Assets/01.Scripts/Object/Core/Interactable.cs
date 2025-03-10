@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public abstract class Interactable : MonoBehaviour 
+public abstract class Interactable : MonoBehaviour //인터페이스로 사용할 수 있다...
 {
     public abstract void OnInteraction(Collider collider);
     public abstract string GetPromptString();
@@ -19,10 +19,10 @@ public abstract class Interactable<T> : Interactable where T : InteractableData
     public bool primer;
 
     [SerializeField] protected bool isOccupidable;
-    [SerializeField] protected float occupidDestroyDelay = 0.1f;
+    [SerializeField] protected float occupidDestroyDelay = 0.05f;
 
     [SerializeField] protected bool isDisposable;
-    [SerializeField] protected float applyDestroyDelay = 0.1f;
+    [SerializeField] protected float applyDestroyDelay = 0.05f;
 
     protected virtual void OccupidPlayer(PlayerSprit player) { }
     protected virtual void ApplyPlayer(PlayerSprit player) { }
@@ -33,6 +33,7 @@ public abstract class Interactable<T> : Interactable where T : InteractableData
     protected virtual void Awake()
     {
         col = GetComponent<Collider>();
+        initiate();
     }
 
     public override void OnInteraction(Collider collider)
@@ -42,6 +43,15 @@ public abstract class Interactable<T> : Interactable where T : InteractableData
     public override string GetPromptString()
     {
         return $"{data.itemName}\n{data.description}";
+    }
+
+    protected virtual void initiate()
+    {
+        isCollisonInteract = data.interactionType == InteractionType.Collision || data.interactionType == InteractionType.Both;
+        isRayInteractable = data.interactionType == InteractionType.Trigger || data.interactionType == InteractionType.Both;
+        primer = data.interactionCategory == InteractalbeCategory.Stuff;
+        isOccupidable = data.interactionCategory == InteractalbeCategory.Item;
+        isDisposable = data.isDisposable;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -105,6 +115,5 @@ public abstract class Interactable<T> : Interactable where T : InteractableData
         isDestroyed = true;
         Destroy(gameObject, delay);
     }
-
 }
 

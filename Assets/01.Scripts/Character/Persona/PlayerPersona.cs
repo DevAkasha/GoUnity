@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityChan;
+﻿using UnityChan;
 using UnityEngine;
 
 public class PlayerPersona : BasePersona<DUnityChan>
@@ -8,6 +6,7 @@ public class PlayerPersona : BasePersona<DUnityChan>
     private StateIndicator hpIndicator;
     private StateIndicator stIndicator;
     private Prompt prompt;
+    private DataSlot slot;
 
     [SerializeField] private GameObject lookAtPos;
     [SerializeField] private Camera mainCamera; 
@@ -19,6 +18,23 @@ public class PlayerPersona : BasePersona<DUnityChan>
 
     public Interactable curInteractObject;
     public Collider col;
+
+    private InteractableData curData;
+    public InteractableData CurData
+    {
+        get { return curData; }
+        private set 
+        {
+            curData = value;
+            if (curData = null) slot.SetIcon("");
+            else slot.SetIcon(CurData.itemName);
+        }
+    }
+
+    public void AddItem(InteractableData data)
+    {
+        CurData = data;
+    }
 
     public void SetStateIndicator(StateIndicator indicator)
     {
@@ -39,6 +55,12 @@ public class PlayerPersona : BasePersona<DUnityChan>
     {
         this.prompt = prompt;
         if (this.prompt==null) Debug.LogWarning($"{prompt.name}이 set되지 않았어!");
+    }
+
+    public void SetDataSlot(DataSlot dataSlot)
+    {
+        slot = dataSlot;
+        if (slot == null) Debug.LogWarning($"{dataSlot.name}이 set되지 않았어!");
     }
 
     private void Update()

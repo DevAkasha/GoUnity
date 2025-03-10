@@ -31,7 +31,7 @@ public class PlayerSprit : BaseSprit<PlayerPersona,DUnityChan>
         animWalkRatio = entity.walkMode ? 0.2f : 1.0f;
         anim.SetFloat("Speed", moveInput.y* animWalkRatio);
         anim.SetFloat("Direction", moveInput.x);
-        anim.speed = animSpeedRatio/entity.forwardSpeed;
+        anim.speed =entity.forwardSpeed / animSpeedRatio ;
 
         // 애니메이션 상태 확인
         currentBaseState = anim.GetCurrentAnimatorStateInfo(0);

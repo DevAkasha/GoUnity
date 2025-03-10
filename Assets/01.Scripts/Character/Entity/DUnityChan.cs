@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DUnityChan : BaseEntity
 {
-    // 캐릭터 기본 속성
+    // 캐릭터 기본 스텟
     public float currentSpeed;
     public float walkSpeed = 3.0f;
     public float forwardSpeed = 10.0f;
@@ -15,10 +15,26 @@ public class DUnityChan : BaseEntity
     public bool walkMode = false;
     public bool manualWalkMode = false;
 
-
-    public float CurHP { get; private set; }
+    private float curHP;
+    public float CurHP
+    {
+        get { return curHP; }
+        private set
+        {
+            curHP = Mathf.Min(value, MaxHP);
+            if (curHP < 0f) Debug.Log("플레이어가 죽었어요");
+        }
+    }
     public float MaxHP { get; private set; } = 100f;
-    public float CurST { get; private set; }
+    private float curST;
+    public float CurST
+    {
+        get { return curST; }
+        private set
+        {
+            curST = Mathf.Min(value, MaxST);
+        }
+    }
     public float MaxST { get; private set; } = 200f;
 
     public float runCostST = 100.0f;
@@ -31,8 +47,8 @@ public class DUnityChan : BaseEntity
     protected override void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        CurHP = MaxHP;
-        CurST = MaxST;
+        CurHP = MaxHP*0.5f;
+        CurST = MaxST * 0.5f;
         stThreshold = MaxST * 0.3f;
     }
 
@@ -92,13 +108,22 @@ public class DUnityChan : BaseEntity
         Vector3 origin = transform.position + Vector3.up * 0.1f;
         return Physics.Raycast(origin, Vector3.down, rayLength);
     }
-
+    
+    public IEnumerator IncreaseSpeed(float addSpeed, float duration)
+    {
+        forwardSpeed += addSpeed;
+        yield return new WaitForSeconds(duration);
+        forwardSpeed -= addSpeed;
+    }
+    public void Heal(float addHP)
+    {
+        CurHP += addHP;
+    }
     private void RecoverStamina()
     {
         if (CurST < MaxST)
         {
             CurST += stRecoveryRate * Time.deltaTime;
-            CurST = Mathf.Min(CurST, MaxST);
         }
     }
 }
