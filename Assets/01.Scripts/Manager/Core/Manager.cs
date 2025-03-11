@@ -21,6 +21,7 @@ public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
 
         }
     }
+    public static bool IsInstance => instance != null;
     protected virtual bool isPersistent => true;
 
     protected virtual void Awake()

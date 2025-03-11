@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SpeedFactor : InteractableStuff
+﻿public class SpeedFactor : InteractableStuff
 {
     protected override void ApplyPlayer(PlayerSprit player)
     {

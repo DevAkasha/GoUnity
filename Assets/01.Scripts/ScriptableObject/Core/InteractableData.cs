@@ -1,10 +1,5 @@
 ﻿using UnityEngine;
 
-public enum InteractionType { Collision, Trigger, Both}
-public enum InteractalbeCategory { Item, Stuff }
-
-
-
 public abstract class InteractableData : ScriptableObject
 {
     [Header("공통 프로퍼티")]

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 
 public abstract class BaseSprit<T,U> : MonoBehaviour where T : BasePersona<U> where U : BaseEntity
 {

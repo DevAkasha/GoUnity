@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class HealFactor: InteractableStuff
+﻿public class HealFactor: InteractableStuff
 {
     protected override void ApplyPlayer(PlayerSprit player)
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 public enum InteractableItemType { Resource, Equipment, Available }
 
 [CreateAssetMenu(fileName ="newItem",menuName = "Interactable/Item")]
