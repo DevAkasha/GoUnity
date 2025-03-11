@@ -100,6 +100,7 @@ public class DUnityChan : BaseEntity
         return isGround;
     }
 
+    // 지면 확인
     public bool IsGrounded()
     {
         float rayLength = 0.3f;
@@ -107,16 +108,21 @@ public class DUnityChan : BaseEntity
         return Physics.Raycast(origin, Vector3.down, rayLength);
     }
     
+    // 아이템효과 코루틴
     public IEnumerator IncreaseSpeed(float addSpeed, float duration)
     {
         forwardSpeed += addSpeed;
         yield return new WaitForSeconds(duration);
         forwardSpeed -= addSpeed;
     }
+
+    // 아이템효과 힐
     public void Heal(float addHP)
     {
         CurHP += addHP;
     }
+
+    //스테미나 자동회복
     private void RecoverStamina()
     {
         if (CurST < MaxST)

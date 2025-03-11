@@ -7,7 +7,7 @@ public class DataSlot : MonoBehaviour
 
     private void Start()
     {
-        CharacterManager.Instance.Player.persona.SetDataSlot(this);
+        CharacterManager.Instance.Player.Persona.SetDataSlot(this);
     }
 
     public void SetIcon(string name)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+//소재철 튜터님 프레임워크 스크립트
 public class PoolManager : Manager<PoolManager>
 {
     Dictionary<string, Queue<PoolBase>> pools = new Dictionary<string, Queue<PoolBase>>();

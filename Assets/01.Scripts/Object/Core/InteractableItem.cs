@@ -2,7 +2,7 @@
 {
     protected override void OccupidPlayer(PlayerSprit player)
     {
-        player.persona.AddItem(data);
+        player.Persona.AddItem(data);
     }
     protected override void OccupidNPC(NPCSprit npc)
     {

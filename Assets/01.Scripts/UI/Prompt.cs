@@ -13,7 +13,7 @@ public class Prompt : MonoBehaviour
     }
     private void Start()
     {
-        CharacterManager.Instance.Player.persona.SetPrompt(this);
+        CharacterManager.Instance.Player.Persona.SetPrompt(this);
     }
     public void SetText(string contents)
     {

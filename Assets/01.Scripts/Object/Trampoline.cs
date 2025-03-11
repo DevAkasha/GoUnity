@@ -15,8 +15,8 @@ public class Trampoline : InteractableStuff
    
     protected override void ApplyPlayer(PlayerSprit player)
     {
-        player.entity.rb.velocity = new Vector3(player.entity.rb.velocity.x,0f, player.entity.rb.velocity.z);
-        player.entity.rb.AddForce(new Vector3(0f, 1000f, 0f), ForceMode.Impulse);
+        player.Entity.rb.velocity = new Vector3(player.Entity.rb.velocity.x,0f, player.Entity.rb.velocity.z);
+        player.Entity.rb.AddForce(new Vector3(0f, 1000f, 0f), ForceMode.Impulse);
     }
 
 }

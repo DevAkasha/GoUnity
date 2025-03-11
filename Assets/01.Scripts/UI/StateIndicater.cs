@@ -11,7 +11,7 @@ public class StateIndicator : MonoBehaviour
 
     private void Start()
     {
-        CharacterManager.Instance.Player.persona.SetStateIndicator(this);
+        CharacterManager.Instance.Player.Persona.SetStateIndicator(this);
     }
     
     public void Indicate(float value)

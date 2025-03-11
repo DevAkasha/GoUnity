@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+//소재철 튜터님 프레임워크 스크립트
 public class MonsterData : BaseData
 {
     public int maxHp;
@@ -25,6 +26,7 @@ public class DataManager : Manager<DataManager>
     protected override void Awake()
     {
         base.Awake();
+        //임시 코드 나중에 구글 시트에서 긁어오는 방식으로 변환 
         datas.Add("Character", new CharacterData() { key = "Character", atk = 1, powerShotCount = 500 });
         datas.Add("Monster1", new MonsterData() { key = "Monster1", maxHp = 1000, name = "잡몹1" });
         datas.Add("Monster2", new MonsterData() { key = "Monster2", maxHp = 2000, name = "잡몹2" });
@@ -60,6 +62,7 @@ public class DataManager : Manager<DataManager>
     public List<BaseData> GetDatas<T>() where T : BaseData
     {
         var datas = new List<BaseData>(this.datas.Values);
+        //IsAssignableFrom(typeof(T)) C# Type메서드 할당가능 확인 메서드
         return datas.FindAll(obj => obj.GetType().IsAssignableFrom(typeof(T)));
     }
 }

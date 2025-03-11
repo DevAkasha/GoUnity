@@ -3,19 +3,20 @@ using UnityEngine;
 
 public class PlayerPersona : BasePersona<DUnityChan>
 {
+    //플레이어 종속 뷰
     private StateIndicator hpIndicator;
     private StateIndicator stIndicator;
     private Prompt prompt;
     private DataSlot slot;
 
+    //카메라 전환 관련
     [SerializeField] private GameObject lookAtPos;
     [SerializeField] private Camera mainCamera; 
     [SerializeField] private ThirdPersonCamera mainCameraCS;
 
+    //상호작용 관련
     private float interactionRate = 0.05f;
     private float lastCheckTime;
-    public LayerMask layerMask;
-
     public Interactable curInteractObject;
     public Collider col;
 
@@ -31,11 +32,13 @@ public class PlayerPersona : BasePersona<DUnityChan>
         }
     }
 
+    //데이터 저장
     public void AddItem(InteractableData data)
     {
         CurData = data;
     }
 
+    // 플레이어 종속 뷰 등록(추후 델리게이트 사용 리펙토링 고안)
     public void SetStateIndicator(StateIndicator indicator)
     {
         switch (indicator.type)
@@ -56,7 +59,6 @@ public class PlayerPersona : BasePersona<DUnityChan>
         this.prompt = prompt;
         if (this.prompt==null) Debug.LogWarning($"{prompt.name}이 set되지 않았어!");
     }
-
     public void SetDataSlot(DataSlot dataSlot)
     {
         slot = dataSlot;
@@ -65,6 +67,7 @@ public class PlayerPersona : BasePersona<DUnityChan>
 
     private void Update()
     {
+        //종속 뷰 갱신
         hpIndicator.Indicate(entity.CurHP / entity.MaxHP);
         stIndicator.Indicate(entity.CurST / entity.MaxST);
 
@@ -75,6 +78,7 @@ public class PlayerPersona : BasePersona<DUnityChan>
         }
     }
 
+    //인터렉션 확인
     private void CheckInteractable()
     {
         if (lookAtPos == null) return;
@@ -109,6 +113,7 @@ public class PlayerPersona : BasePersona<DUnityChan>
 
     }
 
+    //인터렉션 시도
     public void TryInteractaction(Interactable target)
     {
         if (target == null) return;

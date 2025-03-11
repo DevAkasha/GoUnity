@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerSprit : BaseSprit<PlayerPersona,DUnityChan>
 {
+    //애니메이션 관련
     private Animator anim;
     private float animSpeedRatio = 10.0f;
     private Vector2 moveInput;
@@ -25,11 +26,11 @@ public class PlayerSprit : BaseSprit<PlayerPersona,DUnityChan>
     {
         anim.SetTrigger("Hit");
         // 이동 처리
-        entity.Move(moveInput.x, moveInput.y);
-        animWalkRatio = entity.walkMode ? 0.2f : 1.0f;
+        Entity.Move(moveInput.x, moveInput.y);
+        animWalkRatio = Entity.walkMode ? 0.2f : 1.0f;
         anim.SetFloat("Speed", moveInput.y* animWalkRatio);
         anim.SetFloat("Direction", moveInput.x);
-        anim.speed =entity.forwardSpeed / animSpeedRatio ;
+        anim.speed =Entity.forwardSpeed / animSpeedRatio ;
 
         // 애니메이션 상태 확인
         currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
@@ -37,12 +38,14 @@ public class PlayerSprit : BaseSprit<PlayerPersona,DUnityChan>
         // 애니메이션 처리
         if (currentBaseState.fullPathHash == jumpState)
         {
-            if (entity.IsGrounded())
+            if (Entity.IsGrounded())
             {
                 anim.SetBool("Jump", false);
             }
         }
     }
+
+    //인풋시스템용 이벤트 메서드
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
@@ -54,7 +57,7 @@ public class PlayerSprit : BaseSprit<PlayerPersona,DUnityChan>
         {
             if (!anim.IsInTransition(0))
             {
-                if (entity.TryJump())
+                if (Entity.TryJump())
                 {
                     anim.SetBool("Jump", true);
                 }
@@ -66,18 +69,18 @@ public class PlayerSprit : BaseSprit<PlayerPersona,DUnityChan>
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            entity.manualWalkMode = true;
+            Entity.manualWalkMode = true;
         }
             
         else if (context.phase == InputActionPhase.Canceled)
         {
-            entity.manualWalkMode = false;
+            Entity.manualWalkMode = false;
         }    
     }
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
-            persona.TryInteractaction(persona.curInteractObject);
+            Persona.TryInteractaction(Persona.curInteractObject);
     }
 }

@@ -2,6 +2,6 @@
 {
     protected override void ApplyPlayer(PlayerSprit player)
     {
-        player.entity.Heal(20f);
+        player.Entity.Heal(20f);
     }
 }
