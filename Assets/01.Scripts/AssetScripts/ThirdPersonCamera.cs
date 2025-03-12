@@ -1,14 +1,11 @@
 ﻿
 using UnityEngine;
-using System.Collections;
 using UnityEngine.InputSystem;
-using static UnityEngine.GraphicsBuffer;
 
 namespace UnityChan
 {
     public class ThirdPersonCamera : MonoBehaviour
     {
-        public float smooth = 3f;       // 카메라 움직임 부드럽게 하는 변수
         public int CameraPositionIndex = 1; // 카메라 포지션변경 값
         Transform standardPos;          // 기본 카메라 위치
         Transform frontPos;         // 전방카메라 위치
