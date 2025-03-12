@@ -11,12 +11,12 @@ public abstract class BaseSprit<T, U> : MonoBehaviour where T : Persona where U 
     protected virtual void Awake()
     {
         Persona = GetComponent<T>();
-        if (Entity == null)
+        if (Persona == null)
         {
             Debug.LogError($"{typeof(U).Name}이 존재하지 않습니다. {gameObject.name}의 BaseSprit이 올바르게 설정되지 않았습니다.");
         }
         Entity = GetComponent<U>();
-        if (Persona == null)
+        if (Entity == null)
         {
             Debug.LogWarning($"{typeof(T).Name}이 존재하지 않습니다. Sprit이 독립적으로 동작합니다.");
         }
